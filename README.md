@@ -12,7 +12,7 @@
 
 ```shell
 go build
-./xiaoetong -u 'http://xxxx.m3u8'
+./xiaoetong -u 'http://xxxx.m3u8' -n 新名称
 ```
 
 #### 3. 文件数限制

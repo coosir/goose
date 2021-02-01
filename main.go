@@ -186,7 +186,9 @@ func getPrefix(url string) string {
 
 func main() {
 	var url string
+	var newName string
 	flag.StringVar(&url, "u", "", "m3u8 url")
+	flag.StringVar(&newName, "n", "", "new name")
 	flag.Parse()
 
 	if !strings.HasSuffix(url, "m3u8") {
@@ -215,4 +217,18 @@ func main() {
 	// 4. 合并文件
 	err = mergeFile(count)
 	fmt.Println(err)
+
+	if err == nil {
+		if len(newName) > 0 {
+			err = os.Rename("merge.ts", "../"+newName+".ts")
+		} else {
+			err = os.Rename("merge.ts", "../merge.ts")
+		}
+		fmt.Println("move", err)
+		if err == nil {
+			os.Chdir("../")
+			err = os.RemoveAll(strings.TrimSuffix(filepath.Base(url), ".m3u8"))
+			fmt.Println("remove", err)
+		}
+	}
 }
